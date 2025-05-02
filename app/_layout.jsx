@@ -1,7 +1,7 @@
-import { Alert, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
+import { useState } from "react"
+import { FlatList, Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native"
 import Logo from '../assets/img/cheked.png'
 import Task from "../components/Task"
-import { useState } from "react"
 
 export default function RootLayout() {
 
