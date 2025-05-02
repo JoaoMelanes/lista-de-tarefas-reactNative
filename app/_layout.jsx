@@ -1,14 +1,28 @@
 import { Alert, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
 import Logo from '../assets/img/cheked.png'
 import Task from "../components/Task"
+import { useState } from "react"
 
 export default function RootLayout() {
 
-  const list = [
+  const initialList = [
     {id:1, completed: true, text: "Fazer café"},
     {id:2, completed: false, text: "Estudar programação"},
     {id:3, completed: true, text: "Comprar ração da gata"}
   ]
+
+  const [list, setList] = useState(initialList)
+  const [text, setText] = useState('')
+
+  const addTask = () => {
+    if(!text){
+      console.log("Adicione um valor!")
+      return
+    }
+    const newList = {id: list.length + 1, completed: false, text}
+    setList([...list, newList])
+    setText('')
+  }
 
   return(
     <View style={style.viewScroll}>
@@ -17,8 +31,11 @@ export default function RootLayout() {
         <Text style={style.title}>Minhas Tarefas</Text>
       </View>
       <View>
-      <TextInput style={style.input}/>
-        <Pressable onPress={() => Alert.alert("Tarefa Adicionada!")} 
+      <TextInput style={style.input}
+        value={text}
+        onChangeText={setText}
+      />
+        <Pressable onPress={addTask} 
         style={({pressed}) => [style.btn,{backgroundColor: pressed ? '#0ca46c' : '#32ba7c'}]}>
           <Text style={style.btn_text}>Adicionar</Text>
         </Pressable>
@@ -28,7 +45,7 @@ export default function RootLayout() {
       style={style.listContainer}
       data={list}
       keyExtractor={(item) => item.id}
-      renderItem={({item}) => <Task text={item.text} completed={item.completed}/>} 
+      renderItem={({item}) => <Task text={item.text} initialCompleted={item.completed}/>} 
 
       />
     </View>
